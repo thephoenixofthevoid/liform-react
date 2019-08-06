@@ -9,36 +9,29 @@ import buildSyncValidation from "./buildSyncValidation";
 import { setError } from "./buildSyncValidation";
 import compileSchema from "./compileSchema";
 
-const BaseForm = props => {
-  const { schema, handleSubmit, theme, error, submitting, context } = props;
-  return (
-    <form onSubmit={handleSubmit}>
-      {renderField(schema, null, theme || DefaultTheme, "", context)}
+function BaseForm({ schema, handleSubmit, theme = DefaultTheme, error, submitting, context }) {
+  return <form onSubmit={handleSubmit}>
+      {renderField(schema, null, theme, "", context)}
       <div>{error && <strong>{error}</strong>}</div>
       <button className="btn btn-primary" type="submit" disabled={submitting}>
         Submit
       </button>
-    </form>
-  );
+  </form>
 };
 
 const Liform = props => {
   props.schema.showLabel = false;
   const schema = compileSchema(props.schema);
   const formName = props.formKey || props.schema.title || "form";
+
   const FinalForm = reduxForm({
     form: props.formKey || props.schema.title || "form",
     validate: props.syncValidation || buildSyncValidation(schema, props.ajv),
     initialValues: props.initialValues,
     context: { ...props.context, formName }
   })(props.baseForm || BaseForm);
-  return (
-    <FinalForm
-      renderFields={renderField}
-      {...props}
-      schema={schema}
-    />
-  );
+  
+  return <FinalForm renderFields={renderField} schema={schema} {...props}/>
 };
 
 Liform.propTypes = {
