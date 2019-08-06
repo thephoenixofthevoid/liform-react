@@ -3,27 +3,24 @@ function isObject(thing) {
 }
 
 function compileSchema(schema, root) {
-  if (!root) {
-    root = schema;
+  if (!root) root = schema;
+  
+  if (isObject(schema) && schema.$ref) {
+    const ref = schema.$ref;
+    const resolved = resolveRef(ref, root)
+    return compileSchema(resolved, root);
   }
-  let newSchema;
 
   if (isObject(schema)) {
-    newSchema = {};
-    for (let i in schema) {
-      if (schema.hasOwnProperty(i)) {
-        if (i === "$ref") {
-          newSchema = compileSchema(resolveRef(schema[i], root), root);
-        } else {
-          newSchema[i] = compileSchema(schema[i], root);
-        }
-      }
+    let newSchema = {};
+    for (let i in schema) if (schema.hasOwnProperty(i)) {
+      newSchema[i] = compileSchema(schema[i], root);
     }
     return newSchema;
   }
 
   if (Array.isArray(schema)) {
-    newSchema = [];
+    let newSchema = [];
     for (let i = 0; i < schema.length; i += 1) {
       newSchema[i] = compileSchema(schema[i], root);
     }
