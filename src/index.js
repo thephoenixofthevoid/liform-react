@@ -34,7 +34,7 @@ const Liform = props => {
   })(props.baseForm || BaseForm);
   return (
     <FinalForm
-      renderFields={renderField.bind(this)}
+      renderFields={renderField}
       {...props}
       schema={schema}
     />
