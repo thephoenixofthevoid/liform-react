@@ -23,10 +23,11 @@ const renderChoice = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
   const selectOptions = extractSelectOptions(field.schema.items)
+  const id = field.id;
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={"field-" + field.name}>
+      <label className="control-label" htmlFor={id}>
         {field.label}
       </label>
       {selectOptions.map(([value, name]) => {
