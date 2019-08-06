@@ -1,6 +1,8 @@
-export function prevent(callback) {
-    return function(event) {
-      event.preventDefault();
-      return callback.call(this, event)
-    }
-  }
+function preventDefault(callback) {
+  return function(event) {
+    event.preventDefault();
+    return callback.call(this, event);
+  };
+}
+
+export { preventDefault };

@@ -6,7 +6,7 @@ import ChoiceWidget from "./ChoiceWidget";
 import cc from "classnames";
 import { FieldArray } from "./Field"
 
-import { prevent } from "../../utils/preventDefault"
+import { preventDefault } from "../../utils/preventDefault"
 
 const renderArrayFields = (
   count,
@@ -21,25 +21,25 @@ const renderArrayFields = (
   if (!count) return null;
 
   return _times(count, idx => {
-    const showUpButton   = idx !== count - 1 && count > 1;
-    const showDownButton = idx !== 0         && count > 1;
+    const showUp   = idx !== count - 1 && count > 1;
+    const showDown = idx !== 0         && count > 1;
+
+    const itemUp     = preventDefault(e => swap(idx, idx + 1));
+    const itemDown   = preventDefault(e => swap(idx, idx - 1));
+    const itemDelete = preventDefault(e => remove(idx));
 
     return (
         <div key={idx}>
           <div className="btn-group pull-right ">
-            {showUpButton && (
-              <button className="btn btn-primary" onClick={prevent(e => swap(idx, idx + 1))}>
-                <span className="glyphicon glyphicon-arrow-down" />
-              </button>
-            )}
+            {showUp && <button className="btn btn-primary" onClick={itemUp}>
+              <span className="glyphicon glyphicon-arrow-down" />
+            </button>}
 
-            {showDownButton && (
-              <button className="btn btn-primary" onClick={prevent(e => swap(idx, idx - 1))}>
-                <span className="glyphicon glyphicon-arrow-up" />
-              </button>
-            )}
+            {showDown && <button className="btn btn-primary" onClick={itemDown}>
+              <span className="glyphicon glyphicon-arrow-up" />
+            </button>}
 
-            <button className="btn btn-danger" onClick={prevent(e => remove(idx))}>
+            <button className="btn btn-danger" onClick={itemDelete}>
               <span className="glyphicon glyphicon-trash" />
             </button>
           </div>
@@ -77,8 +77,7 @@ const renderInput = field => {
         }
       )}
       <button type="button" className="pull-right btn btn-primary"
-        onClick={() => field.fields.push()}
-      >
+        onClick={() => field.fields.push()}>
         Add
       </button>
       <div className="clearfix" />
@@ -101,13 +100,17 @@ const CollectionWidget = props => {
   );
 };
 
+function isChoiceWidget(schema) {
+  return schema.items.hasOwnProperty("enum") &&
+    schema.hasOwnProperty("uniqueItems") &&
+    schema.uniqueItems;
+}
+
+
+
 const ArrayWidget = props => {
   // Arrays are tricky because they can be multiselects or collections
-  if (
-    props.schema.items.hasOwnProperty("enum") &&
-    props.schema.hasOwnProperty("uniqueItems") &&
-    props.schema.uniqueItems
-  ) {
+  if (isChoiceWidget(props.schema)) {
     return ChoiceWidget({
       ...props,
       schema: props.schema.items,
