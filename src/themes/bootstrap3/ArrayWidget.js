@@ -35,8 +35,6 @@ function ArrayFieldButtons({ index, fields }) {
 }
 
 const renderArrayFields = ({ fieldName, fields, theme, context, schema }) => _times(fields.length, index => {
-
-
     return (
         <div key={index}>
           <ArrayFieldButtons index={index} fields={fields} />
