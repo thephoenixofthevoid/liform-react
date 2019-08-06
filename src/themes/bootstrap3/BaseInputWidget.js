@@ -4,26 +4,23 @@ import classNames from "classnames";
 import { Field } from "./Field";
 
 const renderInput = field => {
-  const className = classNames([
-    "form-group",
-    { "has-error": field.meta.touched && field.meta.error }
-  ]);
+  const hasError = field.meta.touched && field.meta.error;
+  const className = classNames({ "form-group": true, "has-error": hasError });
+
   return (
     <div className={className}>
       <label className="control-label" htmlFor={field.id}>
         {field.label}
       </label>
-      <input
+      <input className="form-control"
         {...field.input}
         type={field.type}
         required={field.required}
-        className="form-control"
         placeholder={field.placeholder}
       />
-      {field.meta.touched &&
-        field.meta.error && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+      {hasError && (
+        <span className="help-block">{field.meta.error}</span>
+      )}
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}
