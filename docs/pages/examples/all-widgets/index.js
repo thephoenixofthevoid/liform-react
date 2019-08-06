@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import { Provider } from 'react-redux'
-import Liform from '../../../../src/'
+import Liform from '../../../../lib/'
 
 const Demo = () => {
     const reducer = combineReducers({ form: formReducer })
@@ -13,47 +13,57 @@ const Demo = () => {
         'properties': {
             'choice': {
                 'type': 'string',
+                'title': "Select one:",
                 'enum': [
                     'foo',
                     'bar'
                 ]
             },
             'string': {
-                'type': 'string'
+                'type': 'string',
+                'title': "Enter string:",
             },
             'checkbox': {
                 'type': 'boolean',
+                'title': "Boolean value:",
             },
             'color': {
                 'type': 'string',
-                'widget': 'color'
+                'widget': 'color',
+                'title': "Pick up a color:",
             },
             'date': {
                 'type': 'string',
-                'widget': 'date'
+                'widget': 'date',
+                'title': "Enter date:",
             },
             'datetime': {
                 'type': 'string',
-                'widget': 'datetime'
+                'widget': 'datetime',
+                'title': "Enter datetime:",
             },
             'compatible-date': {
                 'type': 'string',
                 'widget': 'compatible-date',
-                'format': 'date'
+                'format': 'date',
+                'title': "Enter date:",
             },
             'compatible-datetime': {
                 'type': 'string',
                 'widget': 'compatible-datetime',
-                'format': 'date-time'
+                'format': 'date-time',
+                'title': "Enter datetime:",
             },
             'email': {
                 'type': 'string',
                 'widget': 'email',
-                'format': 'email'
+                'format': 'email',
+                'title': "Email",
             },
             'file': {
                 'type': 'string',
-                'widget': 'file'
+                'widget': 'file',
+                'title': "File upload",
             },
             'money': {
                 'type': 'string',
@@ -65,23 +75,28 @@ const Demo = () => {
             },
             'password': {
                 'type': 'string',
-                'widget': 'password'
+                'widget': 'password',
+                'title': "Enter Password",
             },
             'percent': {
                 'type': 'number',
-                'widget': 'percent'
+                'widget': 'percent',
+                'title': "Enter percent",
             },
             'search': {
                 'type': 'string',
-                'widget': 'search'
+                'widget': 'search',
+                'title': "Enter search query",
             },
             'textarea': {
                 'type': 'string',
-                'widget': 'textarea'
+                'widget': 'textarea',
+                'title': "Enter text",
             },
             'url': {
                 'type': 'string',
-                'widget': 'url'
+                'widget': 'url',
+                'title': "Enter url",
             },
             'tasks': {
                 'type':'array',

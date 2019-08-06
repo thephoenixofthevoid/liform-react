@@ -4,16 +4,16 @@ var config = {
   entry: ["./index"],
   output: {
     filename: "bundle.js",
-    path: "/"
+    path: path.join(__dirname, './build')
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?/,
-        loaders: [ 'babel-loader' ],
+        use: 'babel-loader',    
         include: path.join(__dirname, './'),
         exclude: /node_modules/
-      },
+      }
     ]
   }
 };

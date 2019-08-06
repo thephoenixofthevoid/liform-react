@@ -30,6 +30,7 @@ const Widget = props => {
       id={"field-" + props.fieldName}
       placeholder={props.schema.default}
       description={props.schema.description}
+      normalize={parseFloat}
     />
   );
 };
