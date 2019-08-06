@@ -6,7 +6,6 @@ import renderFields from "./renderFields";
 import renderField from "./renderField";
 import processSubmitErrors from "./processSubmitErrors";
 import buildSyncValidation from "./buildSyncValidation";
-import { setError } from "./buildSyncValidation";
 import compileSchema from "./utils/compileSchema";
 
 function BaseForm({ schema, handleSubmit, theme = DefaultTheme, error, submitting, context }) {
@@ -24,9 +23,12 @@ const Liform = props => {
   const schema = compileSchema(props.schema);
   const formName = props.formKey || props.schema.title || "form";
 
+
+  const validate = props.syncValidation || buildSyncValidation(schema, props.ajv);
+
   const FinalForm = reduxForm({
     form: props.formKey || props.schema.title || "form",
-    validate: props.syncValidation || buildSyncValidation(schema, props.ajv),
+    validate: validate,
     initialValues: props.initialValues,
     context: { ...props.context, formName }
   })(props.baseForm || BaseForm);

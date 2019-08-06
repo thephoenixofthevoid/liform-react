@@ -1,6 +1,6 @@
-import Ajv from "ajv";
 import merge from "deepmerge";
 import { set as _set } from "lodash";
+import Ajv from "ajv";
 
 import findTypeInSchema from "./utils/findTypeInSchema"
 
@@ -20,12 +20,13 @@ const setError = schema => error => {
   } else {
     _set(errors, dataPath, error.message);
   }
-  
+
   return errors;
 };
 
 
-const buildSyncValidation = (schema, ajv = null) => {
+const buildSyncValidation = (schema, ajv) => {
+
   ajv = ajv || new Ajv({
     errorDataPath: "property",
     allErrors: true,
