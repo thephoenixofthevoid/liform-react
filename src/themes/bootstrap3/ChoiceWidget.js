@@ -10,32 +10,25 @@ const renderSelect = field => {
   const options = field.schema.enum;
   const optionNames = field.schema.enum_titles || options;
 
+  const showNullOption = !field.required && !field.multiple;
   const selectOptions = _zipObject(options, optionNames);
   return (
     <div className={className}>
       <label className="control-label" htmlFor={"field-" + field.name}>
         {field.label}
       </label>
-      <select
+      <select className="form-control"
         {...field.input}
-        className="form-control"
         id={"field-" + field.name}
         required={field.required}
         multiple={field.multiple}
       >
-        {!field.required &&
-          !field.multiple && (
-            <option key={""} value={""}>
-              {field.placeholder}
-            </option>
-          )}
-        {_map(selectOptions, (name, value) => {
-          return (
-            <option key={value} value={value}>
-              {name}
-            </option>
-          );
-        })}
+        {showNullOption && (
+          <option key={""} value={""}>{field.placeholder}</option>
+        )}
+        {_map(selectOptions,
+          (name, value) => <option key={value} value={value}>{name}</option>
+        )}
       </select>
 
       {hasError && (
