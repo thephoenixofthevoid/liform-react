@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import cc from "classnames";
 import { Field } from "./Field";
 
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
-  const className = classNames({ "form-group": true, "has-error": hasError });
+  const className = cc({ "form-group": true, "has-error": hasError });
 
   return (
     <div className={className}>
