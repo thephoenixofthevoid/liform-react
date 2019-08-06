@@ -9,74 +9,58 @@ import { ErrorBlock } from "./fragments"
 
 import { preventDefault } from "../../utils/preventDefault"
 
-const renderArrayFields = (
-  count,
-  schema,
-  theme,
-  fieldName,
-  remove,
-  context,
-  swap
-) => {
-  const prefix = fieldName + ".";
-  if (!count) return null;
 
-  return _times(count, idx => {
-    const showUp   = idx !== count - 1 && count > 1;
-    const showDown = idx !== 0         && count > 1;
+function ArrayFieldButtons({ index, fields }) {
 
-    const itemUp     = preventDefault(e => swap(idx, idx + 1));
-    const itemDown   = preventDefault(e => swap(idx, idx - 1));
-    const itemDelete = preventDefault(e => remove(idx));
+  const showUp   = index !== fields.length - 1;
+  const showDown = index !== 0        ;
+
+  const itemUp     = preventDefault(e => fields.swap(index, index + 1));
+  const itemDown   = preventDefault(e => fields.swap(index, index - 1));
+  const itemDelete = preventDefault(e => fields.remove(index));
+
+  return <div className="btn-group pull-right ">
+    {showUp && <button className="btn btn-primary" onClick={itemUp}>
+      <span className="glyphicon glyphicon-arrow-down" />
+    </button>}
+
+    {showDown && <button className="btn btn-primary" onClick={itemDown}>
+      <span className="glyphicon glyphicon-arrow-up" />
+    </button>}
+
+    <button className="btn btn-danger" onClick={itemDelete}>
+      <span className="glyphicon glyphicon-trash" />
+    </button>
+  </div>
+}
+
+const renderArrayFields = ({ fieldName, fields, theme, context, schema }) => _times(fields.length, index => {
+
 
     return (
-        <div key={idx}>
-          <div className="btn-group pull-right ">
-            {showUp && <button className="btn btn-primary" onClick={itemUp}>
-              <span className="glyphicon glyphicon-arrow-down" />
-            </button>}
-
-            {showDown && <button className="btn btn-primary" onClick={itemDown}>
-              <span className="glyphicon glyphicon-arrow-up" />
-            </button>}
-
-            <button className="btn btn-danger" onClick={itemDelete}>
-              <span className="glyphicon glyphicon-trash" />
-            </button>
-          </div>
+        <div key={index}>
+          <ArrayFieldButtons index={index} fields={fields} />
           {renderField(
-            { ...schema, showLabel: false },
-            idx.toString(),
+            { ...schema.items, showLabel: false },
+            index.toString(),
             theme,
-            prefix,
+            fieldName + ".",
             context
           )}
         </div>
     );
-  });
-};
+});
 
 const renderInput = field => {
   const hasError = field.meta.submitFailed && field.meta.error
   const className = cc({ "arrayType": true, "has-error": hasError });
-
   const addItem    = () => field.fields.push()
-  const swapItems  = (a, b) => field.fields.swap(a, b);
-  const removeItem = idx => field.fields.remove(idx)
 
   return (
     <div className={className}>
       <legend className="control-label">{field.label}</legend>
       <ErrorBlock {...field}/>
-      {renderArrayFields(
-        field.fields.length,
-        field.schema.items,
-        field.theme,
-        field.fieldName,
-        removeItem,
-        field.context,
-        swapItems
-      )}
+      {renderArrayFields(field)}
       <button type="button" className="pull-right btn btn-primary" onClick={addItem}>Add</button>
       <div className="clearfix" />
     </div>
