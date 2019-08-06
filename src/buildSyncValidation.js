@@ -2,71 +2,42 @@ import Ajv from "ajv";
 import merge from "deepmerge";
 import { set as _set } from "lodash";
 
-const setError = (error, schema) => {
+import findTypeInSchema from "./utils/findTypeInSchema"
+
+const setError = schema => error => {
   // convert property accessor (.xxx[].xxx) notation to jsonPointers notation
   if (error.dataPath.charAt(0) === ".") {
-    error.dataPath = error.dataPath.replace(/[.[]/gi, "/");
-    error.dataPath = error.dataPath.replace(/[\]]/gi, "");
+    error.dataPath = error.dataPath.replace(/[.[]/gi, "/").replace(/[\]]/gi, "");
   }
   const dataPathParts = error.dataPath.split("/").slice(1);
-  let dataPath = error.dataPath.slice(1).replace(/\//g, ".");
+  const dataPath = error.dataPath.slice(1).replace(/\//g, ".");
   const type = findTypeInSchema(schema, dataPathParts);
 
-  let errorToSet;
-  if (type === "array" || type === "allOf" || type === "oneOf") {
-    errorToSet = { _error: error.message };
-  } else {
-    errorToSet = error.message;
-  }
-
   let errors = {};
-  _set(errors, dataPath, errorToSet);
+
+  if (type === "array" || type === "allOf" || type === "oneOf") {
+    _set(errors, dataPath, { _error: error.message });
+  } else {
+    _set(errors, dataPath, error.message);
+  }
+  
   return errors;
 };
 
-const findTypeInSchema = (schema, dataPath) => {
-  if (!schema) {
-    return;
-  } else if (dataPath.length === 0 && schema.hasOwnProperty("type")) {
-    return schema.type;
-  } else {
-    if (schema.type === "array") {
-      return findTypeInSchema(schema.items, dataPath.slice(1));
-    } else if (schema.hasOwnProperty("allOf")) {
-      if (dataPath.length === 0) return "allOf";
-      schema = { ...schema, ...merge.all(schema.allOf) };
-      delete schema.allOf;
-      return findTypeInSchema(schema, dataPath);
-    } else if (schema.hasOwnProperty("oneOf")) {
-      if (dataPath.length === 0) return "oneOf";
-      schema.oneOf.forEach(item => {
-        let type = findTypeInSchema(item, dataPath);
-        if (type) {
-          return type;
-        }
-      });
-    } else {
-      return findTypeInSchema(
-        schema.properties[dataPath[0]],
-        dataPath.slice(1)
-      );
-    }
-  }
-};
 
-const buildSyncValidation = (schema, ajvParam = null) => {
-  let ajv = ajvParam;
-  if (ajv === null) {
-    ajv = new Ajv({
-      errorDataPath: "property",
-      allErrors: true,
-      jsonPointers: false
-    });
-  }
+const buildSyncValidation = (schema, ajv = null) => {
+  ajv = ajv || new Ajv({
+    errorDataPath: "property",
+    allErrors: true,
+    jsonPointers: false
+  })
+
+  const mapper = setError(schema)
+
   return values => {
     const valid = ajv.validate(schema, values);
     if (valid) return {};
-    let errors = ajv.errors.map(error => setError(error, schema))
+    let errors = ajv.errors.map(mapper)
     // We need at least two elements
     return merge.all(errors);
   };
@@ -74,4 +45,3 @@ const buildSyncValidation = (schema, ajvParam = null) => {
 
 export default buildSyncValidation;
 
-export { setError };
