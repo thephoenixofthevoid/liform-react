@@ -6,29 +6,25 @@ export const isRequired = (schema, fieldName) => {
 };
 
 function compareByOrder(a, b) {
-  if (a.propertyOrder > b.propertyOrder) return 1;
-  if (a.propertyOrder < b.propertyOrder) return -1;
+  if (a.order > b.order) return 1;
+  if (a.order < b.order) return -1;
   return 0;
 }
 
+function getPropertiesArray(schema) {
+  let props = [];
+  for (let name in schema.properties) {
+    const field    = schema.properties[name];
+    const order    = field.propertyOrder;
+    const required = isRequired(schema, name)
+    props.push({ name, order, required, field });
+  }
+  return props.sort(compareByOrder);
+}
 
 const renderFields = (schema, theme, prefix = null, context = {}) => {
-  let props = [];
-  for (let i in schema.properties) {
-    props.push({ prop: i, propertyOrder: schema.properties[i].propertyOrder });
-  }
-  props = props.sort(compareByOrder);
-  return props.map(item => {
-    const name = item.prop;
-    const field = schema.properties[name];
-    return renderField(
-      field,
-      name,
-      theme,
-      prefix,
-      context,
-      isRequired(schema, name)
-    );
+  return getPropertiesArray(schema).map(function (item) {
+    return renderField(item.field, item.name, theme, prefix, context, item.required)
   });
 };
 
