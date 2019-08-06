@@ -19,38 +19,42 @@ const changeValue = (checked, item, onChange, currentValue = []) => {
   return onChange(currentValue);
 };
 
+
+function extractSelectOptions(schema) {
+  // TODO: add support for schema.items.enumNames
+  const options = schema.items.enum;
+  const names   = schema.items.enum_titles || options;
+
+  const selectOptions = zipObject(options, names)
+
+  return Object.entries(selectOptions);
+}
+
+
 const renderChoice = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  const options = field.schema.items.enum;
-  const optionNames = field.schema.items.enum_titles || options;
+  const selectOptions = extractSelectOptions(field.schema)
 
-  const selectOptions = zipObject(options, optionNames);
   return (
     <div className={className}>
       <label className="control-label" htmlFor={"field-" + field.name}>
         {field.label}
       </label>
-      {Object.entries(selectOptions).map(([value, name]) => (
-        <div className="checkbox" key={value}>
+      {selectOptions.map(([value, name]) => {
+        const input = field.input;
+        const checked = input.value.indexOf(value) !== -1;
+        const onChange = ({ target }) => {
+          changeValue(target.checked, value, input.onChange, input.value)
+        }
+
+        return <div className="checkbox" key={value}>
           <label>
-            <input
-              type="checkbox"
-              value={value}
-              checked={field.input.value.indexOf(value) !== -1}
-              onChange={e =>
-                changeValue(
-                  e.target.checked,
-                  value,
-                  field.input.onChange,
-                  field.input.value
-                )
-              }
-            />
+            <input type="checkbox" value={value} checked={checked} onChange={onChange}/>
             {name}
           </label>
         </div>
-      ))}
+      })}
 
       {hasError && (
         <span className="help-block">{field.meta.error}</span>
