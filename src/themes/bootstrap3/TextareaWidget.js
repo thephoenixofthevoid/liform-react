@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
 
-import { Label,  ErrorBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
 
 
 const renderInput = field => {
@@ -13,16 +13,13 @@ const renderInput = field => {
   return (
     <div className={className}>
       <Label {...field}/>
-      <textarea className="form-control"
+      <textarea id={field.id} className="form-control"
         {...field.input}
-        id={field.id}
         required={field.required}
         placeholder={field.placeholder}
       />
       <ErrorBlock {...field}/>
-      {field.description && (
-        <span className="help-block">{field.description}</span>
-      )}
+      <DescriptionBlock {...field}/>
     </div>
   );
 };

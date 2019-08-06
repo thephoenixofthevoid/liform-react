@@ -1,7 +1,7 @@
 import React from "react";
 import cc from "classnames";
 import { Field } from "../Field";
-import { Label,  ErrorBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
 
 import extractSelectOptions from "../../utils/extractSelectOptions";
 
@@ -28,9 +28,7 @@ const renderChoice = field => {
       ))}
 
       <ErrorBlock {...field}/>
-      {field.description && (
-        <span className="help-block">{field.description}</span>
-      )}
+      <DescriptionBlock {...field}/>
     </div>
   );
 };

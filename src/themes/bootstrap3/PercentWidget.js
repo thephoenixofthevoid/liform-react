@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
-import { Label,  ErrorBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
 
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
@@ -15,9 +15,7 @@ const renderInput = field => {
         <span className="input-group-addon"> %</span>
       </div>
       <ErrorBlock {...field}/>
-      {field.description && (
-        <span className="help-block">{field.description}</span>
-      )}
+      <DescriptionBlock {...field}/>
     </div>
   );
 };

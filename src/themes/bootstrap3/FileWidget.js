@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "../Field";
 import cc from "classnames";
-import { Label,  ErrorBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
 
 const processFile = (onChange, e) => {
   const files = e.target.files;
@@ -26,16 +26,14 @@ const File = field => {
   return (
     <div className={className}>
       <Label {...field}/>
-      <input
+      <input type="file" className="form-control"
         name={field.name}
         onBlur={field.onBlur}
         onChange={onChange}
         required={field.required}
-        className="form-control"
-        type="file"
       />
       <ErrorBlock {...field}/>
-      {field.description && <span>{field.description}</span>}
+      <DescriptionBlock {...field}/>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
 import extractSelectOptions from "../../utils/extractSelectOptions";
-import { Label,  ErrorBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
 
 
 const renderSelect = field => {
@@ -27,9 +27,7 @@ const renderSelect = field => {
       </select>
 
       <ErrorBlock {...field}/>
-      {field.description && (
-        <span className="help-block">{field.description}</span>
-      )}
+      <DescriptionBlock {...field}/>
     </div>
   );
 };

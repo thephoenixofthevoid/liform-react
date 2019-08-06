@@ -10,3 +10,8 @@ export function ErrorBlock({ meta }) {
     if (!hasError) return null
     return <span className="help-block">{meta.error}</span>
 }
+
+export function DescriptionBlock({ description }) {
+    if (!description) return null 
+    return <span className="help-block">{description}</span>
+}
