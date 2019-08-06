@@ -6,16 +6,12 @@ import { Field } from "../Field";
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  return (
-    <div className={className}>
+  const id = "field-" + field.name;
+  
+  return <div className={className}>
       <div className="checkbox">
         <label>
-          <input
-            {...field.input}
-            type="checkbox"
-            required={field.required}
-            id={"field-" + field.name}
-          />{" "}
+          <input type="checkbox" id={id} required={field.required} {...field.input}/>{" "}
           {field.label}
         </label>
       </div>
@@ -25,8 +21,8 @@ const renderInput = field => {
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}
-    </div>
-  );
+  </div>
+  
 };
 
 const CheckboxWidget = props => {

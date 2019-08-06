@@ -1,5 +1,5 @@
 import React from "react";
-import BaseInputWidget from "./BaseInputWidget";
+import BaseInputWidget from "../BaseInputWidget";
 
 const TimeWidget = props => <BaseInputWidget type="time" {...props} />;
 

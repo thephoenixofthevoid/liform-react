@@ -1,21 +1,20 @@
 import React from "react";
 
 const DateSelector = props => {
-  return (
-    <select
-      value={props.extractField(props.input.value)}
+  const hasEmptyOption = !props.required;
+  const value = props.extractField(props.input.value);
+
+  return <select className="form-control" value={value}
       onBlur={props.onBlur}
       onChange={props.onChange}
-      className="form-control"
       id={"props-" + props.name}
       required={props.required}
     >
-      {!props.required && (
+      {hasEmptyOption && (
         <option key={""} value={""}>{props.emptyOption}</option>
       )}
       {props.range.map(idx => <option key={idx} value={idx}>{idx}</option>)}
-    </select>
-  );
+  </select>
 };
 
 export default DateSelector;

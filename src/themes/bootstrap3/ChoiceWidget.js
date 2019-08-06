@@ -5,7 +5,7 @@ import { Field } from "../Field";
 import { zipObject as _zipObject, map as _map } from "lodash";
 
 const renderSelect = field => {
-    const hasError = field.meta.touched && field.meta.error;
+  const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
   const options = field.schema.enum;
   const optionNames = field.schema.enum_titles || options;
