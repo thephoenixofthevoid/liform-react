@@ -1,5 +1,5 @@
 import expect from "expect";
-import compileSchema from "../compileSchema";
+import compileSchema from "../utils/compileSchema";
 
 describe("createLiform", () => {
   const schema = {

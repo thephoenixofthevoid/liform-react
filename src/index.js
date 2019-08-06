@@ -7,7 +7,7 @@ import renderField from "./renderField";
 import processSubmitErrors from "./processSubmitErrors";
 import buildSyncValidation from "./buildSyncValidation";
 import { setError } from "./buildSyncValidation";
-import compileSchema from "./compileSchema";
+import compileSchema from "./utils/compileSchema";
 
 function BaseForm({ schema, handleSubmit, theme = DefaultTheme, error, submitting, context }) {
   return <form onSubmit={handleSubmit}>
@@ -30,7 +30,7 @@ const Liform = props => {
     initialValues: props.initialValues,
     context: { ...props.context, formName }
   })(props.baseForm || BaseForm);
-  
+
   return <FinalForm renderFields={renderField} schema={schema} {...props}/>
 };
 
