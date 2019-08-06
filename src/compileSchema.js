@@ -13,10 +13,13 @@ function compileSchema(root) {
   return compile(root)
 
   function compile(schema) {
-    if (isArray(schema)) return schema.map(compile);
-    if (isObject(schema) && schema.$ref) 
+    if (isArray(schema)) {
+      return schema.map(compile);
+    }
+    if (isObject(schema)) {
+      if (!schema.$ref) return mapObj(schema, compile);
       return compile(resolveRef(schema.$ref, root));
-    if (isObject(schema)) return mapObj(schema, compile);
+    }
     return schema;
   }
 }
