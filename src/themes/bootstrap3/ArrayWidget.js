@@ -5,6 +5,7 @@ import { times as _times} from "lodash";
 import ChoiceWidget from "./ChoiceWidget";
 import cc from "classnames";
 import { FieldArray } from "../Field"
+import { ErrorBlock } from "./fragments"
 
 import { preventDefault } from "../../utils/preventDefault"
 
@@ -66,9 +67,7 @@ const renderInput = field => {
   return (
     <div className={className}>
       <legend className="control-label">{field.label}</legend>
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {renderArrayFields(
         field.fields.length,
         field.schema.items,

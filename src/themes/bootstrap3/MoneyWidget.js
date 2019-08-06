@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
+import { Label,  ErrorBlock } from "./fragments"
 
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
@@ -9,9 +10,7 @@ const renderInput = field => {
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={field.id}>
-        {field.label}
-      </label>
+      <Label {...field}/>
       <div className="input-group">
         <span className="input-group-addon">€ </span>
         <input
@@ -23,9 +22,7 @@ const renderInput = field => {
           placeholder={field.placeholder}
         />
       </div>
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

@@ -2,6 +2,7 @@ import React from "react";
 import cc from "classnames";
 import { Field } from "../Field";
 import DateSelector from "./DateSelector";
+import { Label,  ErrorBlock } from "./fragments"
 
 // produces an array [start..end-1]
 const range = (start, end) =>
@@ -92,9 +93,7 @@ class CompatibleDateTime extends React.Component {
     
     return (
       <div className={className}>
-        <label className="control-label" htmlFor={field.id}>
-          {field.label}
-        </label>
+        <Label {...field}/>
         <ul className="list-inline">
           <li>
             <DateSelector
@@ -157,9 +156,7 @@ class CompatibleDateTime extends React.Component {
             />
           </li>
         </ul>
-        {hasError && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+        <ErrorBlock {...field}/>
         {field.description && (
           <span className="help-block">{field.description}</span>
         )}

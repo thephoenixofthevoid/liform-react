@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
+import { ErrorBlock } from "./fragments"
 
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  
+
   return <div className={className}>
       <div className="checkbox">
         <label>
@@ -14,14 +15,12 @@ const renderInput = field => {
           {field.label}
         </label>
       </div>
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}
   </div>
-  
+
 };
 
 const CheckboxWidget = props => {

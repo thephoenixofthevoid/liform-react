@@ -3,24 +3,23 @@ import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
 
+import { Label,  ErrorBlock } from "./fragments"
+
+
 const renderInput = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={field.id}>
-        {field.label}
-      </label>
+      <Label {...field}/>
       <textarea className="form-control"
         {...field.input}
         id={field.id}
         required={field.required}
         placeholder={field.placeholder}
       />
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

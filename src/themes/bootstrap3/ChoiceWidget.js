@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
 import extractSelectOptions from "../../utils/extractSelectOptions";
+import { Label,  ErrorBlock } from "./fragments"
 
 
 const renderSelect = field => {
@@ -15,9 +16,7 @@ const renderSelect = field => {
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={id}>
-        {field.label}
-      </label>
+      <Label {...field}/>
       <select className="form-control" id={id} {...field.input} required={field.required} multiple={field.multiple}>
         {showNullOption && (
           <option key={""} value={""}>{field.placeholder}</option>
@@ -27,9 +26,7 @@ const renderSelect = field => {
         )}
       </select>
 
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Field } from "../Field";
 import cc from "classnames";
+import { Label,  ErrorBlock } from "./fragments"
 
 const processFile = (onChange, e) => {
   const files = e.target.files;
@@ -24,9 +25,7 @@ const File = field => {
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={field.id}>
-        {field.label}
-      </label>
+      <Label {...field}/>
       <input
         name={field.name}
         onBlur={field.onBlur}
@@ -35,9 +34,7 @@ const File = field => {
         className="form-control"
         type="file"
       />
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && <span>{field.description}</span>}
     </div>
   );

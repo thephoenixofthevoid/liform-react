@@ -1,6 +1,7 @@
 import React from "react";
 import cc from "classnames";
 import { Field } from "../Field";
+import { Label,  ErrorBlock } from "./fragments"
 
 import extractSelectOptions from "../../utils/extractSelectOptions";
 
@@ -23,13 +24,10 @@ const renderChoice = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
   const selectOptions = extractSelectOptions(field.schema.items)
-  const id = field.id;
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={id}>
-        {field.label}
-      </label>
+      <Label {...field}/>
       {selectOptions.map(([value, name]) => {
         const input = field.input;
         const checked = input.value.indexOf(value) !== -1;
@@ -45,9 +43,7 @@ const renderChoice = field => {
         </div>
       })}
 
-      {hasError && (
-        <span className="help-block">{field.meta.error}</span>
-      )}
+      <ErrorBlock {...field}/>
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

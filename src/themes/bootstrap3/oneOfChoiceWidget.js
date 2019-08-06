@@ -5,6 +5,7 @@ import { change } from "redux-form";
 import { connect } from "react-redux";
 import renderField from "../../renderField";
 import { map as _map} from "lodash";
+import { Label } from "./fragments"
 
 class OneOfChoiceWidget extends Component {
   constructor(props) {
@@ -25,9 +26,7 @@ class OneOfChoiceWidget extends Component {
 
     return (
       <div className={className}>
-        <label className="control-label" htmlFor={id}>
-          {schema.title}
-        </label>
+        <Label label={schema.title} id={id}/>
         <select className="form-control" id={id} multiple={false} onChange={this.selectItem} required={field.required}>
           {_map(options, (item, idx) => {
             return (
