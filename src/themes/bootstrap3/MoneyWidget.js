@@ -4,11 +4,12 @@ import cc from "classnames";
 import { Field } from "../Field";
 
 const renderInput = field => {
-    const hasError = field.meta.touched && field.meta.error;
+  const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
+
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={"field-" + field.name}>
+      <label className="control-label" htmlFor={field.id}>
         {field.label}
       </label>
       <div className="input-group">
@@ -17,7 +18,7 @@ const renderInput = field => {
           {...field.input}
           type="number"
           className="form-control"
-          id={"field-" + field.name}
+          id={field.id}
           required={field.required}
           placeholder={field.placeholder}
         />

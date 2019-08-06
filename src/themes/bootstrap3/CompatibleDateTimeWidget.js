@@ -89,6 +89,7 @@ class CompatibleDateTime extends React.Component {
     const field = this.props;
     const hasError = field.meta.touched && field.meta.error;
     const className = cc({ "form-group": true, "has-error": hasError });
+    
     return (
       <div className={className}>
         <label className="control-label" htmlFor={field.id}>

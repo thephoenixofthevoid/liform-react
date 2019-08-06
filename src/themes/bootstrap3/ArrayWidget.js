@@ -59,6 +59,10 @@ const renderInput = field => {
   const hasError = field.meta.submitFailed && field.meta.error
   const className = cc({ "arrayType": true, "has-error": hasError });
 
+  const addItem    = () => field.fields.push()
+  const swapItems  = (a, b) => field.fields.swap(a, b);
+  const removeItem = idx => field.fields.remove(idx)
+
   return (
     <div className={className}>
       <legend className="control-label">{field.label}</legend>
@@ -70,16 +74,11 @@ const renderInput = field => {
         field.schema.items,
         field.theme,
         field.fieldName,
-        idx => field.fields.remove(idx),
+        removeItem,
         field.context,
-        (a, b) => {
-          field.fields.swap(a, b);
-        }
+        swapItems
       )}
-      <button type="button" className="pull-right btn btn-primary"
-        onClick={() => field.fields.push()}>
-        Add
-      </button>
+      <button type="button" className="pull-right btn btn-primary" onClick={addItem}>Add</button>
       <div className="clearfix" />
     </div>
   );

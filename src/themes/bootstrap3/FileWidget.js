@@ -18,8 +18,10 @@ const processFile = (onChange, e) => {
 };
 
 const File = field => {
-    const hasError = field.meta.touched && field.meta.error;
+  const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
+  const onChange = processFile.bind(this, field.input.onChange);
+
   return (
     <div className={className}>
       <label className="control-label" htmlFor={field.id}>
@@ -28,7 +30,7 @@ const File = field => {
       <input
         name={field.name}
         onBlur={field.onBlur}
-        onChange={processFile.bind(this, field.input.onChange)}
+        onChange={onChange}
         required={field.required}
         className="form-control"
         type="file"

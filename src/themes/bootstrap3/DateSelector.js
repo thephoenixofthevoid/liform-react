@@ -3,11 +3,12 @@ import React from "react";
 const DateSelector = props => {
   const hasEmptyOption = !props.required;
   const value = props.extractField(props.input.value);
+  const id = "props-" + props.name
 
   return <select className="form-control" value={value}
       onBlur={props.onBlur}
       onChange={props.onChange}
-      id={"props-" + props.name}
+      id={id}
       required={props.required}
     >
       {hasEmptyOption && (

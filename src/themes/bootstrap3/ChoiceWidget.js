@@ -8,14 +8,14 @@ import extractSelectOptions from "../../utils/extractSelectOptions";
 const renderSelect = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  const id = "field-" + field.name;
+  const id = field.id;
 
   const showNullOption = !field.required && !field.multiple;
   const selectOptions = extractSelectOptions(field.schema)
 
   return (
     <div className={className}>
-      <label className="control-label" htmlFor={"field-" + field.name}>
+      <label className="control-label" htmlFor={id}>
         {field.label}
       </label>
       <select className="form-control" id={id} {...field.input} required={field.required} multiple={field.multiple}>

@@ -21,18 +21,14 @@ class OneOfChoiceWidget extends Component {
     const className = cc(["form-group"]);
     const schema = field.schema;
     const options = schema.oneOf;
+    const id = "field-" + field.fieldName;
 
     return (
       <div className={className}>
-        <label className="control-label" htmlFor={"field-" + field.fieldName}>
+        <label className="control-label" htmlFor={id}>
           {schema.title}
         </label>
-        <select className="form-control"
-          onChange={this.selectItem.bind(this)}
-          id={"field-" + field.fieldName}
-          required={field.required}
-          multiple={false}
-        >
+        <select className="form-control" id={id} multiple={false} onChange={this.selectItem} required={field.required}>
           {_map(options, (item, idx) => {
             return (
               <option key={options.indexOf(item)} value={idx}>
