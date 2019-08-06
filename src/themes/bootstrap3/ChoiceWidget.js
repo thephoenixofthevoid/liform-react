@@ -2,32 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
 import { Field } from "../Field";
-import { zipObject as _zipObject, map as _map } from "lodash";
+import extractSelectOptions from "../../utils/extractSelectOptions";
+
 
 const renderSelect = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  const options = field.schema.enum;
-  const optionNames = field.schema.enum_titles || options;
+  const id = "field-" + field.name;
 
   const showNullOption = !field.required && !field.multiple;
-  const selectOptions = _zipObject(options, optionNames);
+  const selectOptions = extractSelectOptions(field.schema)
+
   return (
     <div className={className}>
       <label className="control-label" htmlFor={"field-" + field.name}>
         {field.label}
       </label>
-      <select className="form-control"
-        {...field.input}
-        id={"field-" + field.name}
-        required={field.required}
-        multiple={field.multiple}
-      >
+      <select className="form-control" id={id} {...field.input} required={field.required} multiple={field.multiple}>
         {showNullOption && (
           <option key={""} value={""}>{field.placeholder}</option>
         )}
-        {_map(selectOptions,
-          (name, value) => <option key={value} value={value}>{name}</option>
+        {selectOptions.map(
+          ([name, value]) => <option key={value} value={value}>{name}</option>
         )}
       </select>
 

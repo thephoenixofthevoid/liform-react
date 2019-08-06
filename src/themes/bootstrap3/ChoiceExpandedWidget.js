@@ -2,25 +2,19 @@ import React from "react";
 import cc from "classnames";
 import { Field } from "../Field";
 
-const zipObject = (props, values) =>
-  props.reduce(
-    (prev, prop, i) => Object.assign(prev, { [prop]: values[i] }),
-    {}
-  );
+import extractSelectOptions from "../../utils/extractSelectOptions";
 
 const renderChoice = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  const options = field.schema.enum;
-  const optionNames = field.schema.enum_titles || options;
+  const selectOptions = extractSelectOptions(field.schema.items);
 
-  const selectOptions = zipObject(options, optionNames);
   return (
     <div className={className}>
       <label className="control-label" htmlFor={"field-" + field.name}>
         {field.label}
       </label>
-      {Object.entries(selectOptions).map(([value, name]) => (
+      {selectOptions.map(([value, name]) => (
         <div className="radio" key={value}>
           <label>
             <input type="radio"

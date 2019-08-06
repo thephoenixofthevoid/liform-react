@@ -2,11 +2,7 @@ import React from "react";
 import cc from "classnames";
 import { Field } from "../Field";
 
-const zipObject = (props, values) =>
-  props.reduce(
-    (prev, prop, i) => Object.assign(prev, { [prop]: values[i] }),
-    {}
-  );
+import extractSelectOptions from "../../utils/extractSelectOptions";
 
 const changeValue = (checked, item, onChange, currentValue = []) => {
   if (checked) {
@@ -20,21 +16,13 @@ const changeValue = (checked, item, onChange, currentValue = []) => {
 };
 
 
-function extractSelectOptions(schema) {
-  // TODO: add support for schema.items.enumNames
-  const options = schema.items.enum;
-  const names   = schema.items.enum_titles || options;
 
-  const selectOptions = zipObject(options, names)
-
-  return Object.entries(selectOptions);
-}
 
 
 const renderChoice = field => {
   const hasError = field.meta.touched && field.meta.error;
   const className = cc({ "form-group": true, "has-error": hasError });
-  const selectOptions = extractSelectOptions(field.schema)
+  const selectOptions = extractSelectOptions(field.schema.items)
 
   return (
     <div className={className}>
