@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Field } from "redux-form";
+import { Field } from "./Field";
 
 const zipObject = (props, values) =>
   props.reduce(

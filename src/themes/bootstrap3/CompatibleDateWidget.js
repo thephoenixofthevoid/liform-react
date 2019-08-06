@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Field } from "redux-form";
+import { Field } from "./Field";
 import DateSelector from "./DateSelector";
 
 // produces an array [start..end-1]

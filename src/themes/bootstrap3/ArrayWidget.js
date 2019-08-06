@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import renderField from "../../renderField";
-import { FieldArray } from "redux-form";
 import { times as _times} from "lodash";
 import ChoiceWidget from "./ChoiceWidget";
 import classNames from "classnames";
+import { FieldArray } from "./Field"
 
 const renderArrayFields = (
   count,
