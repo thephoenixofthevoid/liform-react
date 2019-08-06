@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import cc from "classnames";
 import { Field } from "./Field";
 
 const zipObject = (props, values) =>
@@ -20,10 +20,8 @@ const changeValue = (checked, item, onChange, currentValue = []) => {
 };
 
 const renderChoice = field => {
-  const className = classNames([
-    "form-group",
-    { "has-error": field.meta.touched && field.meta.error }
-  ]);
+  const hasError = field.meta.touched && field.meta.error;
+  const className = cc({ "form-group": true, "has-error": hasError });
   const options = field.schema.items.enum;
   const optionNames = field.schema.items.enum_titles || options;
 
@@ -54,10 +52,9 @@ const renderChoice = field => {
         </div>
       ))}
 
-      {field.meta.touched &&
-        field.meta.error && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+      {hasError && (
+        <span className="help-block">{field.meta.error}</span>
+      )}
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

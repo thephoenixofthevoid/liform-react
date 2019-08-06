@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import cc from "classnames";
 import { change } from "redux-form";
 import { connect } from "react-redux";
 import renderField from "../../renderField";
@@ -18,7 +18,7 @@ class OneOfChoiceWidget extends Component {
 
   render() {
     const field = this.props;
-    const className = classNames(["form-group"]);
+    const className = cc(["form-group"]);
     const schema = field.schema;
     const options = schema.oneOf;
 
@@ -27,8 +27,7 @@ class OneOfChoiceWidget extends Component {
         <label className="control-label" htmlFor={"field-" + field.fieldName}>
           {schema.title}
         </label>
-        <select
-          className="form-control"
+        <select className="form-control"
           onChange={this.selectItem.bind(this)}
           id={"field-" + field.fieldName}
           required={field.required}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import renderField from "../../renderField";
 import { times as _times} from "lodash";
 import ChoiceWidget from "./ChoiceWidget";
-import classNames from "classnames";
+import cc from "classnames";
 import { FieldArray } from "./Field"
 
 const renderArrayFields = (
@@ -74,18 +74,18 @@ const renderArrayFields = (
 };
 
 const renderInput = field => {
-  const className = classNames([
-    "arrayType",
-    { "has-error": field.meta.submitFailed && field.meta.error }
-  ]);
+  const hasError = field.meta.submitFailed && field.meta.error
+  const className = cc({
+    "arrayType": true,
+    "has-error": hasError
+  });
 
   return (
     <div className={className}>
       <legend className="control-label">{field.label}</legend>
-      {field.meta.submitFailed &&
-        field.meta.error && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+      {hasError && (
+        <span className="help-block">{field.meta.error}</span>
+      )}
       {renderArrayFields(
         field.fields.length,
         field.schema.items,
@@ -97,9 +97,7 @@ const renderInput = field => {
           field.fields.swap(a, b);
         }
       )}
-      <button
-        type="button"
-        className="pull-right btn btn-primary"
+      <button type="button" className="pull-right btn btn-primary"
         onClick={() => field.fields.push()}
       >
         Add

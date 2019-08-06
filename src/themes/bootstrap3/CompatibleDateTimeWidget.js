@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import cc from "classnames";
 import { Field } from "./Field";
 import DateSelector from "./DateSelector";
 
@@ -87,10 +87,8 @@ class CompatibleDateTime extends React.Component {
   }
   render() {
     const field = this.props;
-    const className = classNames([
-      "form-group",
-      { "has-error": field.meta.touched && field.meta.error }
-    ]);
+    const hasError = field.meta.touched && field.meta.error;
+    const className = cc({ "form-group": true, "has-error": hasError });
     return (
       <div className={className}>
         <label className="control-label" htmlFor={field.id}>
@@ -158,10 +156,9 @@ class CompatibleDateTime extends React.Component {
             />
           </li>
         </ul>
-        {field.meta.touched &&
-          field.meta.error && (
-            <span className="help-block">{field.meta.error}</span>
-          )}
+        {hasError && (
+          <span className="help-block">{field.meta.error}</span>
+        )}
         {field.description && (
           <span className="help-block">{field.description}</span>
         )}

@@ -1,14 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import cc from "classnames";
 import { Field } from "./Field";
 import { zipObject as _zipObject, map as _map } from "lodash";
 
 const renderSelect = field => {
-  const className = classNames([
-    "form-group",
-    { "has-error": field.meta.touched && field.meta.error }
-  ]);
+    const hasError = field.meta.touched && field.meta.error;
+  const className = cc({ "form-group": true, "has-error": hasError });
   const options = field.schema.enum;
   const optionNames = field.schema.enum_titles || options;
 
@@ -40,10 +38,9 @@ const renderSelect = field => {
         })}
       </select>
 
-      {field.meta.touched &&
-        field.meta.error && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+      {hasError && (
+        <span className="help-block">{field.meta.error}</span>
+      )}
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}

@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import cc from "classnames";
 import { Field } from "./Field";
 
 const renderInput = field => {
-  const className = classNames([
-    "form-group",
-    { "has-error": field.meta.touched && field.meta.error }
-  ]);
+  const hasError = field.meta.touched && field.meta.error;
+  const className = cc({ "form-group": true, "has-error": hasError });
   return (
     <div className={className}>
       <div className="checkbox">
@@ -21,10 +19,9 @@ const renderInput = field => {
           {field.label}
         </label>
       </div>
-      {field.meta.touched &&
-        field.meta.error && (
-          <span className="help-block">{field.meta.error}</span>
-        )}
+      {hasError && (
+        <span className="help-block">{field.meta.error}</span>
+      )}
       {field.description && (
         <span className="help-block">{field.description}</span>
       )}
