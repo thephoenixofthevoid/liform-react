@@ -1,33 +1,24 @@
-function isObject(thing) {
-  return typeof thing === "object" && thing !== null && !Array.isArray(thing);
+const isArray = Array.isArray;
+const isObject = thing => typeof thing === "object" && thing !== null && !isArray(thing);
+
+function mapObj(object, mapper) {
+  let result = {};
+  Object.keys(object).forEach(name => {
+    result[name] = mapper(object[name], name, object);
+  })
+  return result;
 }
 
-function compileSchema(schema, root) {
-  if (!root) root = schema;
-  
-  if (isObject(schema) && schema.$ref) {
-    const ref = schema.$ref;
-    const resolved = resolveRef(ref, root)
-    return compileSchema(resolved, root);
-  }
+function compileSchema(root) {
+  return compile(root)
 
-  if (isObject(schema)) {
-    let newSchema = {};
-    for (let i in schema) if (schema.hasOwnProperty(i)) {
-      newSchema[i] = compileSchema(schema[i], root);
-    }
-    return newSchema;
+  function compile(schema) {
+    if (isArray(schema)) return schema.map(compile);
+    if (isObject(schema) && schema.$ref) 
+      return compile(resolveRef(schema.$ref, root));
+    if (isObject(schema)) return mapObj(schema, compile);
+    return schema;
   }
-
-  if (Array.isArray(schema)) {
-    let newSchema = [];
-    for (let i = 0; i < schema.length; i += 1) {
-      newSchema[i] = compileSchema(schema[i], root);
-    }
-    return newSchema;
-  }
-
-  return schema;
 }
 
 function resolveRef(uri, schema) {
