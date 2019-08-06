@@ -23,8 +23,7 @@ const renderChoice = field => {
       {Object.entries(selectOptions).map(([value, name]) => (
         <div className="radio" key={value}>
           <label>
-            <input
-              type="radio"
+            <input type="radio"
               name={field.input.name}
               value={value}
               checked={field.input.value === value}
