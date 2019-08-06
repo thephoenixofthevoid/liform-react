@@ -57,10 +57,7 @@ const renderArrayFields = (
 
 const renderInput = field => {
   const hasError = field.meta.submitFailed && field.meta.error
-  const className = cc({
-    "arrayType": true,
-    "has-error": hasError
-  });
+  const className = cc({ "arrayType": true, "has-error": hasError });
 
   return (
     <div className={className}>
