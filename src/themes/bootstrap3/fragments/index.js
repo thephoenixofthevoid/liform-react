@@ -15,3 +15,14 @@ export function DescriptionBlock({ description }) {
     if (!description) return null 
     return <span className="help-block">{description}</span>
 }
+
+export function FormGroup({ meta, children, hasError = null }) {
+    if (hasError === null) {
+        hasError = meta.touched && meta.error;
+    }
+    const className = cc({ "form-group": true, "has-error": hasError });
+
+    return <div className={className}>
+        {children}
+    </div>
+}

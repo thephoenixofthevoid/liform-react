@@ -1,23 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cc from "classnames";
 import { Field } from "../Field";
 import extractSelectOptions from "../../utils/extractSelectOptions";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 
 const renderSelect = field => {
-  const hasError = field.meta.touched && field.meta.error;
-  const className = cc({ "form-group": true, "has-error": hasError });
-  const id = field.id;
-
   const showNullOption = !field.required && !field.multiple;
   const selectOptions = extractSelectOptions(field.schema)
 
   return (
-    <div className={className}>
+    <FormGroup {...field}>
       <Label {...field}/>
-      <select className="form-control" id={id} {...field.input} required={field.required} multiple={field.multiple}>
+      <select className="form-control" id={field.id} {...field.input} required={field.required} multiple={field.multiple}>
         {showNullOption && (
           <option key={""} value={""}>{field.placeholder}</option>
         )}
@@ -28,7 +23,7 @@ const renderSelect = field => {
 
       <ErrorBlock {...field}/>
       <DescriptionBlock {...field}/>
-    </div>
+    </FormGroup>
   );
 };
 

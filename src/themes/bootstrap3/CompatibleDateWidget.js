@@ -1,8 +1,7 @@
 import React from "react";
-import cc from "classnames";
 import { Field } from "../Field";
 import DateSelector from "./DateSelector";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 // produces an array [start..end-1]
 const range = (start, end) =>
@@ -70,11 +69,9 @@ class CompatibleDate extends React.Component {
 
   render() {
     const field = this.props;
-    const hasError = field.meta.touched && field.meta.error;
-    const className = cc({ "form-group": true, "has-error": hasError });
   
     return (
-      <div className={className}>
+      <FormGroup {...field}>
         <Label {...field}/>
         <ul className="list-inline">
           <li>
@@ -110,7 +107,7 @@ class CompatibleDate extends React.Component {
         </ul>
         <ErrorBlock {...field}/>
         <DescriptionBlock {...field}/>
-      </div>
+      </FormGroup>
     );
   }
 }

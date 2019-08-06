@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import cc from "classnames";
 import { change } from "redux-form";
 import { connect } from "react-redux";
 import renderField from "../../renderField";
 import { map as _map} from "lodash";
-import { Label } from "./fragments"
+import { Label, FormGroup, DescriptionBlock } from "./fragments"
 
 class OneOfChoiceWidget extends Component {
   constructor(props) {
@@ -19,13 +18,12 @@ class OneOfChoiceWidget extends Component {
 
   render() {
     const field = this.props;
-    const className = cc(["form-group"]);
     const schema = field.schema;
     const options = schema.oneOf;
     const id = "field-" + field.fieldName;
 
     return (
-      <div className={className}>
+      <FormGroup {...field}>
         <Label label={schema.title} id={id}/>
         <select className="form-control" id={id} multiple={false} onChange={this.selectItem} required={field.required}>
           {_map(options, (item, idx) => {
@@ -37,10 +35,8 @@ class OneOfChoiceWidget extends Component {
           })}
         </select>
         <div>{this.renderOption()}</div>
-        {field.description && (
-          <span className="help-block">{field.description}</span>
-        )}
-      </div>
+        <DescriptionBlock {...field}/>
+      </FormGroup>
     );
   }
 

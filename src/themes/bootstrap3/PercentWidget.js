@@ -1,29 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cc from "classnames";
 import { Field } from "../Field";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
-const renderInput = field => {
-  const hasError = field.meta.touched && field.meta.error;
-  const className = cc({ "form-group": true, "has-error": hasError });
-  return (
-    <div className={className}>
-      <Label {...field}/>
-      <div className="input-group">
-        <input className="form-control" type="number" id={field.id} required={field.required} placeholder={field.placeholder} {...field.input}/>
-        <span className="input-group-addon"> %</span>
-      </div>
-      <ErrorBlock {...field}/>
-      <DescriptionBlock {...field}/>
+function PercentWidgetRender(field) {
+  return <FormGroup {...field}>
+    <Label {...field} />
+    <div className="input-group">
+      <input
+        className="form-control"
+        type="number"
+        id={field.id}
+        required={field.required}
+        placeholder={field.placeholder}
+        {...field.input}
+      />
+      <span className="input-group-addon"> %</span>
     </div>
-  );
-};
+    <ErrorBlock {...field} />
+    <DescriptionBlock {...field} />
+  </FormGroup>
+}
+
 
 const Widget = props => {
   return (
     <Field
-      component={renderInput}
+      component={PercentWidgetRender}
       label={props.label}
       name={props.fieldName}
       required={props.required}

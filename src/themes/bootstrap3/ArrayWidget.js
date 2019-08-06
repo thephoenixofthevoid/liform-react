@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import renderField from "../../renderField";
 import { times as _times} from "lodash";
 import ChoiceWidget from "./ChoiceWidget";
-import cc from "classnames";
 import { FieldArray } from "../Field"
-import { ErrorBlock } from "./fragments"
-
+import { ErrorBlock, FormGroup } from "./fragments"
 import { preventDefault } from "../../utils/preventDefault"
 
-
 function ArrayFieldButtons({ index, fields }) {
-
   const showUp   = index !== fields.length - 1;
   const showDown = index !== 0        ;
 
@@ -51,17 +47,16 @@ const renderArrayFields = ({ fieldName, fields, theme, context, schema }) => _ti
 
 const renderInput = field => {
   const hasError = field.meta.submitFailed && field.meta.error
-  const className = cc({ "arrayType": true, "has-error": hasError });
   const addItem    = () => field.fields.push()
 
   return (
-    <div className={className}>
+    <FormGroup {...field} hasError={hasError}>
       <legend className="control-label">{field.label}</legend>
       <ErrorBlock {...field}/>
       {renderArrayFields(field)}
       <button type="button" className="pull-right btn btn-primary" onClick={addItem}>Add</button>
       <div className="clearfix" />
-    </div>
+    </FormGroup>
   );
 };
 

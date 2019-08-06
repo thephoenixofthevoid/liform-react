@@ -1,8 +1,7 @@
 import React from "react";
-import cc from "classnames";
 import { Field } from "../Field";
 import DateSelector from "./DateSelector";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 // produces an array [start..end-1]
 const range = (start, end) =>
@@ -12,29 +11,16 @@ const range = (start, end) =>
 const rangeZeroPad = (start, end) =>
   Array.from({ length: end - start }, (v, k) => ("0" + (k + start)).slice(-2));
 
-const extractYear = value => {
-  return extractDateTimeToken(value, 0);
-};
-const extractMonth = value => {
-  return extractDateTimeToken(value, 1);
-};
-const extractDay = value => {
-  return extractDateTimeToken(value, 2);
-};
-const extractHour = value => {
-  return extractDateTimeToken(value, 3);
-};
-const extractMinute = value => {
-  return extractDateTimeToken(value, 4);
-};
-const extractSecond = value => {
-  return extractDateTimeToken(value, 5);
-};
+const extractYear = value => extractDateTimeToken(value, 0);
+const extractMonth = value => extractDateTimeToken(value, 1);
+const extractDay = value => extractDateTimeToken(value, 2);
+const extractHour = value => extractDateTimeToken(value, 3);
+const extractMinute = value => extractDateTimeToken(value, 4);
+const extractSecond = value => extractDateTimeToken(value, 5);
 
 const extractDateTimeToken = (value, index) => {
-  if (!value) {
-    return "";
-  }
+  if (!value) return "";
+  
   // Remove timezone Z
   value = value.substring(0, value.length - 1);
   const tokens = value.split(/[-T:]/);
@@ -88,11 +74,8 @@ class CompatibleDateTime extends React.Component {
   }
   render() {
     const field = this.props;
-    const hasError = field.meta.touched && field.meta.error;
-    const className = cc({ "form-group": true, "has-error": hasError });
-    
     return (
-      <div className={className}>
+      <FormGroup {...field}>
         <Label {...field}/>
         <ul className="list-inline">
           <li>
@@ -158,7 +141,7 @@ class CompatibleDateTime extends React.Component {
         </ul>
         <ErrorBlock {...field}/>
         <DescriptionBlock {...field}/>
-      </div>
+      </FormGroup>
     );
   }
 }

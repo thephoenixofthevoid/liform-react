@@ -1,7 +1,6 @@
 import React from "react";
 import { Field } from "../Field";
-import cc from "classnames";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 const processFile = (onChange, e) => {
   const files = e.target.files;
@@ -19,12 +18,10 @@ const processFile = (onChange, e) => {
 };
 
 const File = field => {
-  const hasError = field.meta.touched && field.meta.error;
-  const className = cc({ "form-group": true, "has-error": hasError });
   const onChange = processFile.bind(this, field.input.onChange);
 
   return (
-    <div className={className}>
+    <FormGroup {...field}>
       <Label {...field}/>
       <input type="file" className="form-control"
         name={field.name}
@@ -34,7 +31,7 @@ const File = field => {
       />
       <ErrorBlock {...field}/>
       <DescriptionBlock {...field}/>
-    </div>
+    </FormGroup>
   );
 };
 

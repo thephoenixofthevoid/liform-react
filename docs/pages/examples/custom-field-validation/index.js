@@ -12,7 +12,7 @@ const RenderPassword = field => {
         { 'has-error' : field.meta.touched && (field.meta.error || field.meta.warning) }
     ])
     return (
-        <div className={className}>
+        <FormGroup {...field}>
             <label className="control-label" htmlFor={'field-'+field.name}>{field.label}</label>
             <input {...field.input} type="password" className="form-control" placeholder={field.placeholder} />
             {field.meta.touched && field.meta.error && <span className="help-block">{field.meta.error}</span>}

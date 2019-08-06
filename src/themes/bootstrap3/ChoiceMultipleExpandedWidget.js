@@ -1,7 +1,6 @@
 import React from "react";
-import cc from "classnames";
 import { Field } from "../Field";
-import { Label,  ErrorBlock, DescriptionBlock } from "./fragments"
+import { Label,  ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 import extractSelectOptions from "../../utils/extractSelectOptions";
 
@@ -21,12 +20,10 @@ const changeValue = (checked, item, onChange, currentValue = []) => {
 
 
 const renderChoice = field => {
-  const hasError = field.meta.touched && field.meta.error;
-  const className = cc({ "form-group": true, "has-error": hasError });
   const selectOptions = extractSelectOptions(field.schema.items)
 
   return (
-    <div className={className}>
+    <FormGroup {...field}>
       <Label {...field}/>
       {selectOptions.map(([value, name]) => {
         const input = field.input;
@@ -45,7 +42,7 @@ const renderChoice = field => {
 
       <ErrorBlock {...field}/>
       <DescriptionBlock {...field}/>
-    </div>
+    </FormGroup>
   );
 };
 

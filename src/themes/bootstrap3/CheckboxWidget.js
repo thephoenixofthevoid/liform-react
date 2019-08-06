@@ -1,14 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cc from "classnames";
 import { Field } from "../Field";
-import { ErrorBlock, DescriptionBlock } from "./fragments"
+import { ErrorBlock, DescriptionBlock, FormGroup } from "./fragments"
 
 const renderInput = field => {
-  const hasError = field.meta.touched && field.meta.error;
-  const className = cc({ "form-group": true, "has-error": hasError });
-
-  return <div className={className}>
+  return <FormGroup {...field}>
       <div className="checkbox">
         <label>
           <input type="checkbox" id={field.id} required={field.required} {...field.input}/>{" "}
@@ -17,7 +13,7 @@ const renderInput = field => {
       </div>
       <ErrorBlock {...field}/>
       <DescriptionBlock {...field}/>
-  </div>
+  </FormGroup>
 
 };
 
