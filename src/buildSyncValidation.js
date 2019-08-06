@@ -65,17 +65,9 @@ const buildSyncValidation = (schema, ajvParam = null) => {
   }
   return values => {
     const valid = ajv.validate(schema, values);
-    if (valid) {
-      return {};
-    }
-    const ajvErrors = ajv.errors;
-
-    let errors = ajvErrors.map(error => {
-      return setError(error, schema);
-    });
+    if (valid) return {};
+    let errors = ajv.errors.map(error => setError(error, schema))
     // We need at least two elements
-    errors.push({});
-    errors.push({});
     return merge.all(errors);
   };
 };
