@@ -6,6 +6,8 @@ import ChoiceWidget from "./ChoiceWidget";
 import cc from "classnames";
 import { FieldArray } from "./Field"
 
+import { prevent } from "../../utils/preventDefault"
+
 const renderArrayFields = (
   count,
   schema,
@@ -16,45 +18,28 @@ const renderArrayFields = (
   swap
 ) => {
   const prefix = fieldName + ".";
-  if (count) {
-    return _times(count, idx => {
-      return (
+  if (!count) return null;
+
+  return _times(count, idx => {
+    const showUpButton   = idx !== count - 1 && count > 1;
+    const showDownButton = idx !== 0         && count > 1;
+
+    return (
         <div key={idx}>
           <div className="btn-group pull-right ">
-            {idx !== count - 1 && count > 1 ? (
-              <button
-                className="btn btn-primary"
-                onClick={e => {
-                  e.preventDefault();
-                  swap(idx, idx + 1);
-                }}
-              >
+            {showUpButton && (
+              <button className="btn btn-primary" onClick={prevent(e => swap(idx, idx + 1))}>
                 <span className="glyphicon glyphicon-arrow-down" />
               </button>
-            ) : (
-              ""
-            )}
-            {idx !== 0 && count > 1 ? (
-              <button
-                className="btn btn-primary"
-                onClick={e => {
-                  e.preventDefault();
-                  swap(idx, idx - 1);
-                }}
-              >
-                <span className="glyphicon glyphicon-arrow-up" />
-              </button>
-            ) : (
-              ""
             )}
 
-            <button
-              className="btn btn-danger"
-              onClick={e => {
-                e.preventDefault();
-                remove(idx);
-              }}
-            >
+            {showDownButton && (
+              <button className="btn btn-primary" onClick={prevent(e => swap(idx, idx - 1))}>
+                <span className="glyphicon glyphicon-arrow-up" />
+              </button>
+            )}
+
+            <button className="btn btn-danger" onClick={prevent(e => remove(idx))}>
               <span className="glyphicon glyphicon-trash" />
             </button>
           </div>
@@ -66,11 +51,8 @@ const renderArrayFields = (
             context
           )}
         </div>
-      );
-    });
-  } else {
-    return null;
-  }
+    );
+  });
 };
 
 const renderInput = field => {
