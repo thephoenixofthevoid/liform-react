@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BaseInputWidget from "./BaseInputWidget";
 
-const ColorWidget = props => {
-  return <BaseInputWidget type="color" {...props} />;
-};
+const ColorWidget = props => <BaseInputWidget type="color" {...props} />;
 
 BaseInputWidget.propTypes = {
   schema: PropTypes.object.isRequired,
