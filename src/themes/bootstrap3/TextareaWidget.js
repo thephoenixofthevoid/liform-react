@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
-import { Field } from "./Field";
+import { Field } from "../Field";
 
 const renderInput = field => {
     const hasError = field.meta.touched && field.meta.error;
@@ -11,9 +11,8 @@ const renderInput = field => {
       <label className="control-label" htmlFor={"field-" + field.input.name}>
         {field.label}
       </label>
-      <textarea
+      <textarea className="form-control"
         {...field.input}
-        className="form-control"
         id={"field-" + field.input.name}
         required={field.required}
         placeholder={field.placeholder}

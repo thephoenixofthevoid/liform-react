@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
-import { Field } from "./Field";
+import { Field } from "../Field";
 
 const renderInput = field => {
     const hasError = field.meta.touched && field.meta.error;

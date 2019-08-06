@@ -11,17 +11,9 @@ const DateSelector = props => {
       required={props.required}
     >
       {!props.required && (
-        <option key={""} value={""}>
-          {props.emptyOption}
-        </option>
+        <option key={""} value={""}>{props.emptyOption}</option>
       )}
-      {props.range.map(idx => {
-        return (
-          <option key={idx} value={idx}>
-            {idx}
-          </option>
-        );
-      })}
+      {props.range.map(idx => <option key={idx} value={idx}>{idx}</option>)}
     </select>
   );
 };

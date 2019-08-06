@@ -1,5 +1,5 @@
 import React from "react";
-import { Field } from "./Field";
+import { Field } from "../Field";
 import cc from "classnames";
 
 const processFile = (onChange, e) => {

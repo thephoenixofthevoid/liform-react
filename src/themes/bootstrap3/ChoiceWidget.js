@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cc from "classnames";
-import { Field } from "./Field";
+import { Field } from "../Field";
 import { zipObject as _zipObject, map as _map } from "lodash";
 
 const renderSelect = field => {

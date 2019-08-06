@@ -4,7 +4,7 @@ import renderField from "../../renderField";
 import { times as _times} from "lodash";
 import ChoiceWidget from "./ChoiceWidget";
 import cc from "classnames";
-import { FieldArray } from "./Field"
+import { FieldArray } from "../Field"
 
 import { preventDefault } from "../../utils/preventDefault"
 

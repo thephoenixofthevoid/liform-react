@@ -1,6 +1,6 @@
 import React from "react";
 import cc from "classnames";
-import { Field } from "./Field";
+import { Field } from "../Field";
 
 const zipObject = (props, values) =>
   props.reduce(
